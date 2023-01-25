@@ -1,0 +1,17 @@
+{
+  "name": "todo-list-v1",
+  "version": "1.0.0",
+  "description": "EJS project-1",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amey Dhimte",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.8.4"
+  }
+}
