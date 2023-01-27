@@ -65,6 +65,7 @@ app.get("/", (req, res) => {
         res.render("list", {
           listTitle: day,
           newListItems: def_info,
+          day:day
         });
       }
     },
@@ -167,6 +168,7 @@ app.get("/:customListName", (req, res) => {
         res.render("list", {
           listTitle: info.name,
           newListItems: info.items,
+          day:day
         });
       } else {
         const list = new List({
@@ -190,4 +192,13 @@ app.get("/:customListName", (req, res) => {
       console.log(err);
     });
 });
+
+app.post("/create-goto",(req,res)=>{
+  res.redirect("/"+req.body.listname)
+});
+
+app.post("/home",(req,res)=>{
+  res.redirect("/");
+})
+
 app.listen(4000, () => console.log("Example app listening on port 4000!"));

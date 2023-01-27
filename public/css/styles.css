@@ -18,6 +18,18 @@ h1 {
   box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
 }
 
+.smaller-box{
+  max-width: 300px;
+  margin: 50px auto;
+  background: rgb(243, 252, 252);
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+}
+
+.hovering-button:hover{
+  background-color: #1aecdb;
+}
+
 #heading {
   background-color: #00d3c2;
   text-align: center;
