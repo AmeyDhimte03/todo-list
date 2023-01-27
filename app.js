@@ -89,12 +89,12 @@ app.post("/", (req, res) => {
       .save()
       .then((msg) => {
         console.log("successful insertion of " + msg);
+        res.redirect("/");
       })
       .catch((err) => {
         console.log("errors while inserting " + item + " : " + err);
       });
 
-    res.redirect("/");
   } else {
     //💥something new:- to insert something into an embedded document 1st find parent document by findOne
     // then push the new document into the arrayed documents( (or)document with some schema array as their element)
