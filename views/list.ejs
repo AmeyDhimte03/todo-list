@@ -2,7 +2,12 @@
 
     <div class="box" id="heading">
         <h1>
-            <%=listTitle%>'s <br>To-do-List
+            <%=listTitle%>'s 
+            <!-- <form action="/delete-list" method="post" class="delete-list">
+                <input type="hidden" name="list_to_be_deleted" value="<%=listTitle %>">
+                <button type="submit" class="hovering-button">🗑️</button>
+            </form> -->
+            <br>To-do-List
         </h1>
     </div>
     <div class="box">
@@ -28,7 +33,7 @@
         <br>
         <div class="smaller-box">
             <form class="item "action="/create-goto" method="post">
-                <input type="text" name="listname" placeholder="create/go-to another list" autocomplete="off">
+                <input type="text" name="listname" placeholder="create/go-to another list" >
                 <button class="hovering-button" type="submit">🔍</button>
             </form>
         </div>

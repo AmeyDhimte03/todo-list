@@ -1,12 +1,12 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
-//
+
 const date = require(__dirname + "/date.js");
 const day = date.getDateWitoutYearFrom_datejs_module();
 //
 const mongoose = require("mongoose");
 const _=require('lodash');
-
 
 
 app.set("view engine", "ejs");
@@ -15,12 +15,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 mongoose.set("strictQuery", false);
-const dbName = "todolistDb";
-// mongoose.connect("mongodb://127.0.0.1:27017/" + dbName, {
-// mongoose.connect("mongodb+srv://ameydhimte:<mongodbdatabasepassword>@cluster0.0obmid3.mongodb.net/" + dbName, {
-mongoose.connect("mongodb+srv://ameydhimte:mongodbdatabasepassword@cluster0.0obmid3.mongodb.net/" + dbName, {
+
+
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
 });
+
+
+// connectDB.then(()=>{
+//   app.listen(PORT,()=>{
+  //     console.log('Listening on port '+PORT);
+//   })
+// })
 
 const itemsSchema = new mongoose.Schema({
   name: String,
@@ -86,10 +92,10 @@ app.post("/", (req, res) => {
 
   if (listName === day) {
     item
-      .save()
-      .then((msg) => {
-        console.log("successful insertion of " + msg);
-        res.redirect("/");
+    .save()
+    .then((msg) => {
+      console.log("successful insertion of " + msg);
+      res.redirect("/");
       })
       .catch((err) => {
         console.log("errors while inserting " + item + " : " + err);
@@ -110,7 +116,7 @@ app.post("/", (req, res) => {
           .catch((err) => {
             console.log(err);
           });
-      })
+        })
       .catch((error) => {
         console.log(
           "Couldn't perform insertion of the new item dur to:\n" + error
@@ -122,18 +128,18 @@ app.post("/", (req, res) => {
 app.post("/delete_items/:list_name", (req, res) => {
   const item_name = req.body.delete_list_item;
   const list_name = req.params.list_name;
-
+  
   if (list_name === day) {
     Item.deleteOne({ name: item_name })
-      .then((delete_info) => {
-        console.log(delete_info);
-        res.redirect("/");
-      })
-      .catch((err) => {
+    .then((delete_info) => {
+      console.log(delete_info);
+      res.redirect("/");
+    })
+    .catch((err) => {
         console.log("Error while deleting the item : " + err);
       });
-  } 
-  else {
+    } 
+    else {
     List.findOneAndUpdate(
       { name: list_name },
       { $pull: { items: { name: item_name } } },(err,foundList)=>{
@@ -144,17 +150,17 @@ app.post("/delete_items/:list_name", (req, res) => {
               list_name +
               " is Unsuccessful due to:\n" +
               err
-          );
-        }
-        else {console.log(
-            "Deletion of " +
+              );
+            }
+            else {console.log(
+              "Deletion of " +
               item_name +
               " from " +
               list_name +
               " is successful:\n" +
               foundList);
-          res.redirect("/" + list_name);
-        }   
+              res.redirect("/" + list_name);
+            }   
     })
   }
 })
@@ -163,7 +169,7 @@ app.get("/:customListName", (req, res) => {
   const customListName = _.capitalize( req.params.customListName);
   
   List.findOne({ name: customListName })
-    .then((info) => {
+  .then((info) => {
       if (info) {//already exists
         res.render("list", {
           listTitle: info.name,
@@ -176,17 +182,17 @@ app.get("/:customListName", (req, res) => {
           items: defaultItems,
         });
         list
-          .save()
-          .then((msg) => {
-            console.log(
-              "new list with name : " + customListName + " is created"
+        .save()
+        .then((msg) => {
+          console.log(
+            "new list with name : " + customListName + " is created"
             );
             res.redirect("/" + customListName); //This is imp. o/w the user is left hanging! This redirects to same page but this time the if condition is executed
           })
           .catch((error) => {
             console.log("New list couldn't be created bcoz of: " + error);
           });
-      }
+        }
     })
     .catch((err) => {
       console.log(err);
@@ -201,4 +207,5 @@ app.post("/home",(req,res)=>{
   res.redirect("/");
 })
 
-app.listen(4000, () => console.log("Example app listening on port 4000!"));
+const PORT=process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Example app listening on port:"+PORT));
