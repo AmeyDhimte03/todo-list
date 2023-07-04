@@ -100,27 +100,11 @@ app.get("/", (req, res) => {
       .then(
         (def_info) => {
           if (def_info) {
-            if (def_info.length === 0) {
-              const defaultItemsForAUser = defaultItems;
-              defaultItemsForAUser[0].email = req.user.username;
-              defaultItemsForAUser[1].email = req.user.username;
-              defaultItemsForAUser[2].email = req.user.username;
-              Item.insertMany(defaultItemsForAUser)
-                .catch((err) => {
-                  console.log("errors : " + err);
-                })
-                .then((success) => {
-                  // console.log(success);
-                  res.redirect("/");
-                });
-              res.redirect("/login");
-            } else {
-              res.render("list", {
-                listTitle: day,
-                newListItems: def_info,
-                day: day,
-              });
-            }
+            res.render("list", {
+              listTitle: day,
+              newListItems: def_info,
+              day: day,
+            });
           } else {
             console.log("no default info found");
           }
@@ -131,6 +115,7 @@ app.get("/", (req, res) => {
       )
       .catch((err) => {
         console.log(`${err} while finding lists of:${req.user.username}`);
+        res.redirect("/");
       });
   } else {
     res.render("home");
@@ -204,10 +189,22 @@ app.post("/register", function (req, res) {
   User.register(newUser, req.body.password, function (err, user) {
     if (err) {
       console.log("This is the error while registering: " + err);
-      return res.redirect("/register");
+      return res.redirect("/");
     } else {
       // console.log(`${user} is registered`);
+      
       passport.authenticate("local")(req, res, () => {
+        const defaultItemsForAUser = defaultItems;
+        defaultItemsForAUser[0].email = req.user.username;
+        defaultItemsForAUser[1].email = req.user.username;
+        defaultItemsForAUser[2].email = req.user.username;
+        Item.insertMany(defaultItemsForAUser)
+          .catch((err) => {
+            console.log("errors : " + err);
+          })
+          .then((success) => {
+            // console.log(success);
+          });
         return res.redirect("/");
       });
     }
@@ -226,20 +223,12 @@ app.post("/login", function (req, res) {
       res.redirect("/login");
       // return;
     } else {
-      passport.authenticate("local",{ failureRedirect: "/" })(req, res, () => {
+      passport.authenticate("local", { failureRedirect: "/" })(req, res, () => {
         res.redirect("/");
       });
     }
   });
 });
-
-// app.post(
-//   "/login",
-//   passport.authenticate("local", { failureRedirect: "/login" }),
-//   function (req, res) {
-//     res.redirect("/");
-//   }
-// );
 
 //
 app.post("/", (req, res) => {
