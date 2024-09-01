@@ -122,6 +122,10 @@ app.get("/", (req, res) => {
   }
 });
 
+app.get("/about",(req,res)=>{
+  res.render("about");
+})
+
 app.get("/create-goto-:customListName", (req, res) => {
   if (req.isAuthenticated()) {
     const customListName = _.capitalize(req.params.customListName);

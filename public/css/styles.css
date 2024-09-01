@@ -1,14 +1,14 @@
 html {
-  background-color: #E4E9FD;
+  background-color: #e4e9fd;
   background-image: -webkit-linear-gradient(60deg, #09e1cf 50%, #ddf1f1 50%);
   min-height: 1000px;
-  font-family: 'helvetica neue';
+  font-family: "helvetica neue";
 }
 
 h1 {
   color: #fff;
   padding: 10px;
-} 
+}
 
 .box {
   max-width: 400px;
@@ -18,7 +18,7 @@ h1 {
   box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
 }
 
-.smaller-box{
+.smaller-box {
   max-width: 300px;
   margin: 50px auto;
   background: rgb(243, 252, 252);
@@ -26,7 +26,7 @@ h1 {
   box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
 }
 
-.hovering-button:hover{
+.hovering-button:hover {
   background-color: #1aecdb;
 }
 
@@ -39,14 +39,14 @@ h1 {
   min-height: 70px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #F1F1F1;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .item:last-child {
   border-bottom: 0;
 }
 
-input:checked+p {
+input:checked + p {
   text-decoration: line-through;
   text-decoration-color: #00d3c2;
 }
@@ -58,7 +58,7 @@ input[type="checkbox"] {
 p {
   margin: 0;
   padding: 20px;
-  font-size: 1rem;/*previously it was 20px but i changed it*/
+  font-size: 1rem; /*previously it was 20px but i changed it*/
   font-weight: 200;
   color: #00204a;
 }
@@ -68,10 +68,9 @@ form.item {
   margin-left: 20px;
 }
 
-form{
+form {
   text-align: center;
 }
-
 
 button {
   min-height: 50px;
@@ -105,13 +104,20 @@ input[type="text"]:focus {
   opacity: 1;
 }
 
-footer {
+/* footer {
   color: white;
-  color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  } */
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: white;
   text-align: center;
 }
 
-/* .delete-list{
-  display: inline-block;
-  float:right;
-} */
+
